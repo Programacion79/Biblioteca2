@@ -49,7 +49,12 @@ public class Usuarioservicio {
         try{
             Optional<Usuario>usuarioencontrado = this.iusauriorepositorio.findById(idUsuario);
             if(usuarioencontrado.isPresent()){
-                return usuarioencontrado.get();
+                Usuario nuevousuario = usuarioencontrado.get();
+                nuevousuario.setNombre(datosnuevousuario.getNombre());
+                nuevousuario.setDireccion(datosnuevousuario.getDireccion());
+                nuevousuario.setCelular(datosnuevousuario.getCelular());
+
+                return this.iusauriorepositorio.save(nuevousuario);
             }else
                 throw new Exception("Usuario no resgistrado");
 
