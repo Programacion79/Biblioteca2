@@ -12,61 +12,71 @@ public class Prestamoservicio {
     @Autowired
     Iprestamorepositorio iprestamorepositorio;
 
-    public Prestamo guardarPrestamo (Prestamo datosguardar) throws  Exception{
-        try{
-          return   this.iprestamorepositorio.save(datosguardar);
-        }catch (Exception error){
-            throw  new Exception(error.getMessage());
+    public Prestamo guardarPrestamo(Prestamo datosguardar) throws Exception {
+        try {
+            return this.iprestamorepositorio.save(datosguardar);
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
         }
     }
 
 
+    public List<Prestamo> consultaGeneral() throws Exception {
+        try {
+            return this.ConsultaGeneral();
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
+    }
 
-public List<Prestamo> consultaGeneral () throws  Exception{
-    try{
-        return  this.ConsultaGeneral();
-    }catch (Exception error){
+
+    public Prestamo ConsultaIndividualId(Integer Codprestamo) throws Exception {
+        try {
+            optional<Prestamo> prestamoEncontrado = this.iprestamorepositorio.findById(Codprestamo);
+            if (prestamoEncontrado.isPresent())
+                return prestamoEncontrado.get();
+            else
+                throw new Exception("Prestamo no registrado");
+        } catch (Exception error) {
+            throw new Exception(Error.getMessage)
+
+        }
+    }
+
+
+    public Boolean eliminar(String Codprestamo) throws Exception {
+        try {
+            Optional<Prestamo> prestamoEncontrado = this.iprestamorepositorio.findById(Codprestamo);
+            if (prestamoEncontrado.isPresent()) {
+                this.iprestamorepositorio.deleteById(Codprestamo);
+                return true
+            } else new Exception("Prestamo no registrado");
+        }
+
+    }catch(
+    Exception error)
+
+    {
         throw new Exception(error.getMessage());
     }
-}
 
 
-public Prestamo ConsultaIndividualId (Integer Codprestamo) throws  Exception{
-    try{
-        optional<Prestamo> prestamoEncontrado=this.iprestamorepositorio.findById(Codprestamo);
-        if (prestamoEncontrado.isPresent())
-            return prestamoEncontrado.get();
-        else
-            throw  new Exception("Prestamo no registrado");
-    }catch (Exception error){
-        throw new Exception(Error.getMessage)
-
-    }
-}
-
-
-public Boolean eliminar ( String Codprestamo) throws  Exception{
-    try{
-        Optional<Prestamo> prestamoEncontrado=this.iprestamorepositorio.findById(Codprestamo);
-        if(prestamoEncontrado.isPresent()){
-            this.iprestamorepositorio.deleteById(Codprestamo);
-            return true
-        }else new Exception("Prestamo no registrado");
-    }
-
-    }catch (Exception error){
-        throw new Exception(error.getMessage());
-    }
-
-
-
-
-public Prestamo guardarPrestamo (Prestamo datosguardar) throws  Exception{
-    try{
-
-    }catch (Exception error){
-
-    }
+    public Prestamo modificar(Integer Codprestamo, Prestamo datosnuevos) throws Exception {
+        try {
+            Optional<Prestamo> prestamoEncontrado = this.iprestamorepositorio.findById(Codprestamo);
+            if (prestamoEncontrado.isPresent()) {
+                Prestamo prestamoNuevo = prestamoEncontrado.get();
+                prestamoNuevo.setFecha(datosnuevos.getFecha());
+                prestamoNuevo.setIdusuario(datosnuevos.getIdusuario());
+                prestamoNuevo.setActivo(datosnuevos.getActivo());
+                return prestamoNuevo;
+            } else {
+                throw new Exception("Prestamo no resgistrado");
+            }
+        } catch (Exception error) {
+            throw new Exception(error.getMessage());
+        }
+    }//Fin del metodo modificar
 }
 
 
