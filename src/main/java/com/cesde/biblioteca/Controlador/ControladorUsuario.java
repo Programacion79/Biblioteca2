@@ -16,7 +16,7 @@ public class ControladorUsuario {
     //Inyectar los servicios
     @Autowired
     Usuarioservicio usuarioservicio;
-
+       @PatchMapping
     public ResponseEntity<?>gurdarUsuario(@ResponseBody Usuario datosnuevos)throws Exception{
         try {
            return ResponseEntity
